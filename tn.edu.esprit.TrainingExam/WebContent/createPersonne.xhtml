@@ -1,0 +1,54 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui">
+
+<h:head></h:head>
+<h:body>
+	<h:form>
+		<p:panel header="create personne">
+			<h:panelGrid columns="3">
+				<p:outputLabel value="Nom" id="outNom" for="nom" />
+				<p:inputText value="#{createPersonne.personne.nom}" id="nom"
+					required="true" requiredMessage="champs obligatoir">
+					<p:ajax event="blur" update="@this mNom outNom"></p:ajax>
+				</p:inputText>
+				<p:message id="mNom" for="nom"></p:message>
+
+				<p:outputLabel value="prenom" id="outPrenom" for="prenom" />
+				<p:inputText value="#{createPersonne.personne.prenom}" id="prenom"
+					required="true" requiredMessage="champs obligatoir">
+					<p:ajax event="blur" update="@this mPrenom outPrenom"></p:ajax>
+				</p:inputText>
+				<p:message id="mPrenom" for="prenom"></p:message>
+
+				<p:outputLabel value="mail" id="outMail" for="mail" />
+				<p:inputText value="#{createPersonne.personne.mail}" id="mail"
+					required="true" requiredMessage="champs obligatoir"
+					validatorMessage="format mail incorrect">
+					<p:ajax event="blur" update="@this mMail outMail"></p:ajax>
+					<f:validateRegex
+						pattern="^[_A-Za-z0-9-\+]+(\.[_A-Za-z0-9-]+)*@[A-Za-z0-9-]+(\.[A-Za-z0-9]+)*(\.[A-Za-z]{2,})$"></f:validateRegex>
+				</p:inputText>
+				<p:message id="mMail" for="mail"></p:message>
+
+				<p:outputLabel value="age" id="outAge" for="age" />
+				<p:inputText value="#{createPersonne.personne.age}" id="age"
+					required="true" requiredMessage="champs obligatoir">
+					<p:ajax event="blur" update="@this mAge outAge"></p:ajax>
+				</p:inputText>
+				<p:message id="mAge" for="age"></p:message>
+
+
+
+				<p:commandButton value="add" update="@form" action="#{createPersonne.doAddPersonne()}"></p:commandButton>
+			</h:panelGrid>
+		</p:panel>
+
+
+
+	</h:form>
+</h:body>
+</html>

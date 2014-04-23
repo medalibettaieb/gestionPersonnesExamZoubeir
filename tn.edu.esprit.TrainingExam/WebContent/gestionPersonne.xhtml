@@ -1,0 +1,92 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui">
+
+<h:head></h:head>
+<h:body>
+	<h:form id="form">
+		<p:dataTable value="#{gestionPersonnesBean.personnes}" var="p" filteredValue="#{gestionPersonnesBean.filtredPersonnes}">
+			<f:facet name="header">
+list des personnes</f:facet>
+			<p:column filterBy="#{p.nom}">
+				<f:facet name="header">
+					<h:outputText value="name" />
+				</f:facet>
+				<h:outputText value="#{p.nom}" />
+			</p:column>
+			<p:column>
+				<f:facet name="header">
+					<h:outputText value="prenom" />
+				</f:facet>
+				<h:outputText value="#{p.prenom}" />
+			</p:column>
+
+			<p:column>
+				<f:facet name="header">
+					<h:outputText value="age" />
+				</f:facet>
+				<h:outputText value="#{p.age}" />
+			</p:column>
+			<p:column>
+			
+				<p:commandButton value="edit" update=":form:panelPersonne"
+					oncomplete="daialogPersonne.show()">
+					<f:setPropertyActionListener
+						target="#{gestionPersonnesBean.personne}" value="#{p}"></f:setPropertyActionListener>
+				</p:commandButton>
+				<h:commandButton value="remove"
+					action="#{gestionPersonnesBean.doDelete()}">
+					<f:setPropertyActionListener
+						target="#{gestionPersonnesBean.personne}" value="#{p}"></f:setPropertyActionListener>
+				</h:commandButton>
+			</p:column>
+
+		</p:dataTable>
+		<p:dialog widgetVar="daialogPersonne" modal="true">
+			<p:panel header="modification personne" id="panelPersonne">
+				<h:panelGrid columns="3">
+					<p:outputLabel value="Nom" id="outNom" for="nom" />
+					<p:inputText value="#{gestionPersonnesBean.personne.nom}" id="nom"
+						required="true" requiredMessage="champs obligatoir">
+						<p:ajax event="blur" update="@this mNom outNom"></p:ajax>
+					</p:inputText>
+					<p:message id="mNom" for="nom"></p:message>
+
+					<p:outputLabel value="prenom" id="outPrenom" for="prenom" />
+					<p:inputText value="#{gestionPersonnesBean.personne.prenom}"
+						id="prenom" required="true" requiredMessage="champs obligatoir">
+						<p:ajax event="blur" update="@this mPrenom outPrenom"></p:ajax>
+					</p:inputText>
+					<p:message id="mPrenom" for="prenom"></p:message>
+
+					<p:outputLabel value="mail" id="outMail" for="mail" />
+					<p:inputText value="#{gestionPersonnesBean.personne.mail}"
+						id="mail" required="true" requiredMessage="champs obligatoir"
+						validatorMessage="format mail incorrect">
+						<p:ajax event="blur" update="@this mMail outMail"></p:ajax>
+						<f:validateRegex
+							pattern="^[_A-Za-z0-9-\+]+(\.[_A-Za-z0-9-]+)*@[A-Za-z0-9-]+(\.[A-Za-z0-9]+)*(\.[A-Za-z]{2,})$"></f:validateRegex>
+					</p:inputText>
+					<p:message id="mMail" for="mail"></p:message>
+
+					<p:outputLabel value="age" id="outAge" for="age" />
+					<p:inputText value="#{gestionPersonnesBean.personne.age}" id="age"
+						required="true" requiredMessage="champs obligatoir">
+						<p:ajax event="blur" update="@this mAge outAge"></p:ajax>
+					</p:inputText>
+					<p:message id="mAge" for="age"></p:message>
+
+
+
+					<p:commandButton value="add" update="@form"
+						action="#{gestionPersonnesBean.doUpdatePersonne()}"
+						oncomplete="daialogPersonne.hide()"></p:commandButton>
+				</h:panelGrid>
+			</p:panel>
+		</p:dialog>
+	</h:form>
+</h:body>
+</html>
